@@ -21,9 +21,13 @@ import {
 } from '@payloadcms/richtext-lexical'
 //import { slateEditor } from '@payloadcms/richtext-slate'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import NestedArrayBlock from '@/blocks/NestedArrayBlock/NestedArrayBlock.config'
+import NestedLocalizedArrLevelBlock from '@/blocks/NestedLocalizedArrLevelBlock/NestedLocalizedArrLevelBlock.config'
+import NestedLocalizedBlock from '@/blocks/NestedLocalizedBlock/NestedLocalizedBlock.config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,6 +50,9 @@ export default buildConfig({
       admin: {
         useAsTitle: 'title',
       },
+      versions: {
+        drafts: true,
+      },
       fields: [
         {
           name: 'title',
@@ -54,6 +61,12 @@ export default buildConfig({
         {
           name: 'content',
           type: 'richText',
+        },
+        {
+          name: 'blocks',
+          label: 'Blocks',
+          type: 'blocks',
+          blocks: [NestedArrayBlock, NestedLocalizedArrLevelBlock, NestedLocalizedBlock],
         },
       ],
     },
@@ -72,14 +85,19 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // db: postgresAdapter({
-  //   pool: {
-  //     connectionString: process.env.POSTGRES_URI || ''
-  //   }
-  // }),
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI || '',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URI || '',
+    },
   }),
+  // db: mongooseAdapter({
+  //   url: process.env.MONGODB_URI || '',
+  // }),
+  localization: {
+    locales: ['en-US', 'en-ES'],
+    defaultLocale: 'en-US',
+    fallback: true,
+  },
 
   /**
    * Payload can now accept specific translations from 'payload/i18n/en'

@@ -18,10 +18,10 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {};
-  locale: null;
+  locale: 'en-US' | 'en-ES';
   user: User & {
     collection: 'users';
   };
@@ -47,7 +47,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -64,7 +64,7 @@ export interface User {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title?: string | null;
   content?: {
     root: {
@@ -81,15 +81,110 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  blocks?: (NestedArrayBlockT | NestedLocalizedArrLevelBlockT | NestedLocalizedBlockT)[] | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedArrayBlockT".
+ */
+export interface NestedArrayBlockT {
+  title?: string | null;
+  items?:
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nestedArrayBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedLocalizedArrLevelBlockT".
+ */
+export interface NestedLocalizedArrLevelBlockT {
+  title?: string | null;
+  items?:
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nestedLocalizedArrLevelBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NestedLocalizedBlockT".
+ */
+export interface NestedLocalizedBlockT {
+  title?: string | null;
+  items?:
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'nestedLocalizedBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   text?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -108,10 +203,10 @@ export interface Media {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -131,7 +226,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

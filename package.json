@@ -12,7 +12,8 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "ci": "payload migrate && pnpm build",
-    "generate:types": "payload generate:types",
+    "preinstall": "npx only-allow pnpm",
+    "generate:types": "payload generate:typespnpm",
     "generate:schema": "payload-graphql generate:schema",
     "standalone-script": "node ./src/scripts/standalone-script.js"
   },
