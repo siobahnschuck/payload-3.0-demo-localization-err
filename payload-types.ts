@@ -156,7 +156,7 @@ export interface NestedLocalizedBlockT {
   title?: string | null;
   items?:
     | {
-        title?: string | null;
+        arrTitle?: string | null;
         content: {
           root: {
             type: string;

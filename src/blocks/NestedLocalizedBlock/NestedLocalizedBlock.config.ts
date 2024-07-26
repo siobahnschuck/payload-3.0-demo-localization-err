@@ -5,6 +5,7 @@ import type { Block } from 'payload'
 const NestedLocalizedBlock: Block = {
   slug: 'nestedLocalizedBlock',
   interfaceName: 'NestedLocalizedBlockT',
+  dbName: 'nlblock',
   fields: [
     {
       type: 'text',
@@ -16,14 +17,12 @@ const NestedLocalizedBlock: Block = {
       type: 'array',
       name: 'items',
       label: 'Items',
-      minRows: 1,
-      maxRows: 8,
+      required: false,
       fields: [
         {
           type: 'text',
-          name: 'title',
+          name: 'arrTitle',
           label: 'Block Title',
-          localized: true,
         },
         {
           type: 'richText',

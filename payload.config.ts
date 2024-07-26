@@ -57,10 +57,12 @@ export default buildConfig({
         {
           name: 'title',
           type: 'text',
+          localized: true,
         },
         {
           name: 'content',
           type: 'richText',
+          localized: true,
         },
         {
           name: 'blocks',
@@ -104,6 +106,7 @@ export default buildConfig({
    * This is completely optional and will default to English if not provided
    */
   i18n: {
+    fallbackLanguage: 'en',
     supportedLanguages: { en },
   },
 
